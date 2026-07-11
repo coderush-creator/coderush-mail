@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #0f0f12; color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+        .container { background: #18181c; padding: 30px 25px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); max-width: 450px; width: 100%; text-align: center; border: 1px solid #2c2c35; }
+        
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #00bcd4;
+        }
+
+        h2 { font-size: 24px; margin-bottom: 10px; color: #00bcd4; }
+        .subtitle { color: #8a8a98; font-size: 14px; margin-bottom: 25px; }
+        .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; }
+        .btn-whatsapp:hover { background: #20ba59; }
+        .hidden { display: none !important; }
+        .input-group { display: flex; margin-top: 15px; border: 1px solid #444; border-radius: 6px; overflow: hidden; background: #222227; }
+        input { background: transparent; border: none; padding: 12px; color: #fff; font-size: 16px; width: 60%; outline: none; }
+        .domain-tag { width: 40%; background: #2c2c35; color: #aaa; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; border-left: 1px solid #444; }
+        .btn-generate { background: #00bcd4; color: #121212; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 15px; transition: background 0.3s ease; }
+        .btn-generate:hover { background: #0097a7; }
+        #result-box { margin-top: 25px; padding: 15px; background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; border-radius: 6px; color: #25D366; font-weight: bold; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Updated to match your exact Snapchat image filename -->
+        <img src="Snapchat-1986047837.jpg" alt="Admin Profile" class="profile-pic">
+
+        <h2>Email Generator</h2>
+        <p class="subtitle">Generate custom email configurations. Limit: 20 per day.</p>
+        
+        <div id="lock-screen">
+            <p style="margin-bottom: 20px; color: #b3b3c2; line-height: 1.5;">To keep this service free and prevent spam abuse, you must join our official WhatsApp Channel to unlock the tool.</p>
+            <button class="btn-whatsapp" onclick="verifyAndUnlock()">Join WhatsApp Channel & Unlock</button>
+        </div>
+        
+        <div id="generator-tool" class="hidden">
+            <p style="text-align: left; color: #aaa; font-size: 14px; margin-bottom: 5px;">Enter desired username:</p>
+            <div class="input-group">
+                <input type="text" id="email-prefix" placeholder="e.g., support, user123">
+                <div class="domain-tag">@gmail.com</div>
+            </div>
+            <button class="btn-generate" onclick="processEmail()">Generate Email Address</button>
+            <div id="result-box" class="hidden">
+                <span style="color: #fff; font-weight: normal; display:block; margin-bottom: 5px; font-size: 14px;">Your Email Configuration is Ready:</span>
+                <span id="final-email"></span>
+            </div>
+        </div>
+    </div>
+    <script>
+        const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
+        function verifyAndUnlock() {
+            window.open(WHATSAPP_LINK, '_blank');
+            document.getElementById('lock-screen').classList.add('hidden');
+            document.getElementById('generator-tool').classList.remove('hidden');
+        }
+        function processEmail() {
+            const prefix = document.getElementById('email-prefix').value.trim().toLowerCase();
+            if (!prefix) { alert('Please enter a valid username first.'); return; }
+            const cleanPrefix = prefix.replace(/[^a-zA-Z0-9.\-_]/g, "");
+            const fullEmail = cleanPrefix + "@gmail.com";
+            document.getElementById('final-email').innerText = fullEmail;
+            document.getElementById('result-box').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
