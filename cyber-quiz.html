@@ -147,12 +147,27 @@
         const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
         let userName = "Operator";
         
-        // Synth Audio & Music Processing Engine
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let audioCtx = null;
         let bgmNode = null;
+
+        // Safely sets up AudioContext inside try/catch to protect mobile transitions
+        function initAudio() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            } catch (e) {
+                console.log("Audio configuration blocked by browser safety protocols.");
+            }
+        }
 
         function playTone(freq, type, duration, vol) {
             try {
+                initAudio();
+                if (!audioCtx) return;
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 osc.type = type;
@@ -175,11 +190,11 @@
             setTimeout(() => playTone(783.99, 'sine', 0.2, 0.3), 200);
         }
 
-        // Programmatic Ambient Synth Cyberpunk BGM Loop
         function startBackgroundMusic() {
             try {
-                if (bgmNode) return;
-                const bufferSize = audioCtx.sampleRate * 4; // 4 Second pattern loop
+                initAudio();
+                if (!audioCtx || bgmNode) return;
+                const bufferSize = audioCtx.sampleRate * 4;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const data = buffer.getChannelData(0);
                 
@@ -207,9 +222,9 @@
         function triggerScreenShake() {
             const container = document.getElementById("terminal-container");
             container.classList.remove("shaking");
-            void container.offsetWidth; // Force reflow
+            void container.offsetWidth; 
             container.classList.add("shaking");
-            playTone(90, 'sawtooth', 0.3, 0.3); // Heavy timeout crash sound
+            playTone(90, 'sawtooth', 0.3, 0.3); 
             setTimeout(() => container.classList.remove("shaking"), 400);
         }
 
@@ -250,7 +265,7 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    triggerScreenShake(); // Triggering shake strictly upon complete timeout
+                    triggerScreenShake(); 
                     handleAnswer(-1);
                 }
             }, 1000);
@@ -279,8 +294,10 @@
         }
 
         function submitName() {
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            startBackgroundMusic();
+            // Audio elements enclosed fully so execution can never be blocked
+            try { initAudio(); } catch(e){}
+            try { startBackgroundMusic(); } catch(e){}
+            
             const inputVal = document.getElementById("operator-name").value.trim();
             if (inputVal !== "") {
                 userName = inputVal;
@@ -296,14 +313,4 @@
             powerUpAvailable = false;
             document.getElementById("powerup-btn").disabled = true;
             document.getElementById("powerup-btn").innerText = "⚡ EXPLOIT DEPLOYED (0 LEFT)";
-            playExploitSound();
-
-            const currentQ = quizData[currentIdx];
-            const correctIdx = currentQ.c;
-            const buttons = document.getElementsByClassName("option-btn");
-            
-            let removedCount = 0;
-            for (let i = 0; i < buttons.length; i++) {
-                if (i !== correctIdx && removedCount < 1) {
-                    buttons[i].style.opacity = "0.1";
-                    buttons[i].style.
+ 
