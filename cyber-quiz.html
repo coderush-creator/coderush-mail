@@ -6,8 +6,12 @@
     <title>CODERUSH™ Security Terminal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Courier New', Courier, monospace; background: #08080a; color: #00ff66; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0, 255, 102, 0.25); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; }
+        body { font-family: 'Courier New', Courier, monospace; background: #050508; color: #00ff66; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; position: relative; }
+        
+        /* Matrix Background Canvas */
+        #matrix-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; opacity: 0.15; pointer-events: none; }
+        
+        .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 30px rgba(0, 255, 102, 0.2); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; z-index: 2; }
         
         .profile-pic { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid #00ff66; }
         h2 { font-size: 26px; margin-bottom: 2px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
@@ -29,16 +33,21 @@
         
         .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; margin-top: 15px; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-align: center; }
         .btn-whatsapp:hover { background: #20ba59; }
-        .hidden { display: none !important; }
         
+        .btn-share { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: all 0.3s ease; display: inline-block; text-decoration: none; margin-top: 12px; font-family: 'Courier New', monospace; text-align: center; }
+        .btn-share:hover { background: #00cc52; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+        
+        .hidden { display: none !important; }
         .loading { color: #ff3333; font-weight: bold; animation: textBlink 1s infinite; margin: 20px 0; letter-spacing: 1px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes textBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
+
+    <canvas id="matrix-bg"></canvas>
+
     <div class="container">
-        <!-- Update this file name if your photo name changes -->
         <img src="Snapchat-1986047837.jpg" alt="System Terminal" class="profile-pic" onerror="this.style.display='none'">
         
         <h2>CODERUSH™</h2>
@@ -72,7 +81,10 @@
             <p style="color: #00ff66; font-weight: bold; font-size: 22px; margin-bottom: 5px;">👑 ACCESS GRANTED</p>
             <p style="color: #ffff00; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="final-score-display">YOUR SCORE: 0 / 10</p>
             <p style="color: #fff; font-size: 14px; margin-bottom: 15px; line-height: 1.5; text-align: left;" id="rank-critique"></p>
-            <div style="background: #14141c; padding: 12px; border-radius: 6px; text-align: left; font-size: 13px; color: #8a8a98; border: 1px solid #333;">
+            
+            <button class="btn-share" onclick="shareOnWhatsApp()">Challenge a Friend on WhatsApp ⚔️</button>
+            
+            <div style="background: #14141c; padding: 12px; border-radius: 6px; text-align: left; font-size: 13px; color: #8a8a98; border: 1px solid #333; margin-top: 15px;">
                 <b style="color: #00ff66; display: block; margin-bottom: 5px;">🔥 TERMINAL PATCH CODES:</b>
                 • Never reuse the exact same password on different apps.<br>
                 • Do not click links sent by random accounts.<br>
@@ -84,6 +96,30 @@
     <script>
         const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
         
+        // Synth Audio Generator to prevent loading external heavy sound files
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, duration, vol) {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+        function playTypeSound() { playTone(120, 'triangle', 0.03, 0.15); }
+        function playTickSound() { playTone(800, 'sine', 0.04, 0.2); }
+        function playSuccessSound() { 
+            playTone(523.25, 'sine', 0.1, 0.2); 
+            setTimeout(() => playTone(659.25, 'sine', 0.1, 0.2), 100);
+            setTimeout(() => playTone(783.99, 'sine', 0.2, 0.3), 200);
+        }
+
         const quizData = [
             { q: "1. Which password is the strongest and hardest to guess?", a: ["password123", "BhadBoi!99#Gdy", "12345678"], c: 1 },
             { q: "2. Is it safe to share your account verification codes or OTPs with anyone?", a: ["Yes, if they say they are customer support", "No, never share verification codes with anyone", "Yes, if it's a close friend online"], c: 1 },
@@ -113,8 +149,9 @@
                 timeLeft--;
                 document.getElementById("timer-display").innerText = `⏱️ SYSTEM TIME LEFT: ${timeLeft}s`;
                 
-                if (timeLeft <= 5) {
+                if (timeLeft <= 5 && timeLeft > 0) {
                     document.getElementById("timer-display").style.color = "#ff3333";
+                    playTickSound();
                 }
                 
                 if (timeLeft <= 0) {
@@ -131,10 +168,10 @@
             element.innerText = "";
             document.getElementById("terminal-cursor").style.display = "inline";
             
-            // Slowed down slightly from 30ms to 45ms for a cleaner terminal effect
             function type() {
                 if (index < text.length) {
                     element.innerText += text.charAt(index);
+                    if(text.charAt(index) !== " ") { playTypeSound(); }
                     index++;
                     setTimeout(type, 45);
                 } else {
@@ -164,7 +201,10 @@
                     const btn = document.createElement("button");
                     btn.className = "option-btn";
                     btn.innerText = opt;
-                    btn.onclick = () => { if (!isTyping) handleAnswer(idx); };
+                    btn.onclick = () => { 
+                        if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                        if (!isTyping) handleAnswer(idx); 
+                    };
                     container.appendChild(btn);
                     
                     setTimeout(() => { btn.classList.add("show"); }, idx * 120);
@@ -200,7 +240,8 @@
             document.getElementById('lock-screen').classList.add('hidden');
             
             document.getElementById("final-score-display").innerText = `YOUR SCORE: ${score} / ${quizData.length}`;
-            
+            playSuccessSound();
+
             let critiqueText = "";
             if (score === 10) {
                 critiqueText = "MASTER TERMINAL OPERATOR. Flawless execution. Your defense profile perfectly detected every single exploit pattern. Your personal device ecosystem is safe.";
@@ -216,7 +257,44 @@
             document.getElementById('result-box').classList.remove('hidden');
         }
 
+        function shareOnWhatsApp() {
+            const currentUrl = window.location.href;
+            const message = `⚡ I just scored ${score}/10 on the CODERUSH™ Terminal Challenge! Can you beat my score? Break the encryption here ⚔️: ${currentUrl}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Matrix Rain Background Effect Logic
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const alphabet = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 5, 8, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff66';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
         loadQuestion();
     </script>
 </body>
-</html>
+    </html>
+    
