@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Security Challenge</title>
+    <title>CODE RUSH™ Terminal Security Challenge</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Courier New', Courier, monospace; background: #08080a; color: #00ff66; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0, 255, 102, 0.25); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; }
         
         .profile-pic { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid #00ff66; }
-        h2 { font-size: 20px; margin-bottom: 5px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; }
-        .system-status { font-size: 11px; color: #888; margin-bottom: 15px; text-transform: uppercase; }
+        h2 { font-size: 24px; margin-bottom: 2px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
+        .brand-sub { font-size: 13px; color: #00ff66; margin-bottom: 2px; letter-spacing: 1px; font-weight: bold; }
+        .system-status { font-size: 11px; color: #888; margin-top: 5px; margin-bottom: 15px; text-transform: uppercase; }
         
         .timer-box { font-size: 16px; color: #ff3333; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
         .progress-bar { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
@@ -36,11 +37,14 @@
 </head>
 <body>
     <div class="container">
+        <!-- Remember to update your picture name to match your uploaded photo exactly -->
         <img src="Snapchat-1986047837.jpg" alt="System Terminal" class="profile-pic" onerror="this.style.display='none'">
         
-        <h2>CYBER TERMINAL V2.4</h2>
+        <h2>CODE RUSH™</h2>
+        <div class="brand-sub">ᴮᴴᴬᴰᴮᴼᴵ_ᴳᴼ...✞</div>
         <div class="system-status">Nodes: Encrypted // Timer: Armed</div>
         
+        <!-- Quiz Section -->
         <div id="quiz-section">
             <div class="timer-box" id="timer-display">⏱️ SYSTEM TIME LEFT: 15s</div>
             <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
@@ -48,17 +52,20 @@
             <div class="options-box" id="options-container"></div>
         </div>
 
+        <!-- Calculating Score Screen -->
         <div id="loading-section" class="hidden">
             <p class="loading">[!] COMPILING DEFENSIVE AUDIT LOGS...</p>
             <p style="color: #aaa; font-size: 13px;" id="loading-text"></p>
         </div>
 
+        <!-- Lock Screen Section -->
         <div id="lock-screen" class="hidden">
             <p style="color: #ff3333; font-weight: bold; font-size: 18px; margin-bottom: 12px;">🔒 MATRIX DATA LOCKED</p>
             <p style="margin-bottom: 20px; color: #b3b3c2; line-height: 1.6; font-size: 14px;">Your vulnerability profile evaluation is complete. Your official defensive certificate score code is ready. Join our official WhatsApp channel below to bypass encryption and instantly display your results!</p>
             <button class="btn-whatsapp" onclick="verifyAndUnlock()">Unlock My Matrix Score 🔓</button>
         </div>
         
+        <!-- Results Screen (Unlocked) -->
         <div id="result-box" class="hidden">
             <p style="color: #00ff66; font-weight: bold; font-size: 22px; margin-bottom: 5px;">👑 ACCESS GRANTED</p>
             <p style="color: #ffff00; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="final-score-display">YOUR SCORE: 0 / 5</p>
@@ -105,7 +112,7 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    handleAnswer(-1); // Timeout acts as an incorrect answer
+                    handleAnswer(-1);
                 }
             }, 1000);
         }
@@ -141,7 +148,6 @@
             document.getElementById("quiz-progress").style.width = ((currentIdx + 1) / quizData.length * 100) + "%";
             const currentQ = quizData[currentIdx];
             
-            // Hide old buttons during typing
             const container = document.getElementById("options-container");
             container.innerHTML = "";
             
@@ -153,7 +159,6 @@
                     btn.onclick = () => { if (!isTyping) handleAnswer(idx); };
                     container.appendChild(btn);
                     
-                    // Smooth delay display for buttons
                     setTimeout(() => { btn.classList.add("show"); }, idx * 150);
                 });
                 startTimer();
@@ -186,7 +191,6 @@
             window.open(WHATSAPP_LINK, '_blank');
             document.getElementById('lock-screen').classList.add('hidden');
             
-            // Calculate ranks based on actual user scores
             document.getElementById("final-score-display").innerText = `YOUR SCORE: ${score} / ${quizData.length}`;
             
             let critiqueText = "";
@@ -202,7 +206,6 @@
             document.getElementById('result-box').classList.remove('hidden');
         }
 
-        // Boot terminal system
         loadQuestion();
     </script>
 </body>
