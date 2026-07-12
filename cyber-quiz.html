@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODE RUSH™ Terminal Security Challenge</title>
+    <title>CODERUSH™ Security Terminal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Courier New', Courier, monospace; background: #08080a; color: #00ff66; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0, 255, 102, 0.25); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; }
         
         .profile-pic { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid #00ff66; }
-        h2 { font-size: 24px; margin-bottom: 2px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
-        .brand-sub { font-size: 13px; color: #00ff66; margin-bottom: 2px; letter-spacing: 1px; font-weight: bold; }
-        .system-status { font-size: 11px; color: #888; margin-top: 5px; margin-bottom: 15px; text-transform: uppercase; }
+        h2 { font-size: 26px; margin-bottom: 2px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
+        .brand-sub { font-size: 14px; color: #ffffff; margin-bottom: 2px; letter-spacing: 1px; }
+        .brand-title { font-size: 11px; color: #00ff66; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
+        .system-status { font-size: 10px; color: #666; margin-bottom: 15px; text-transform: uppercase; border-top: 1px dashed #333; padding-top: 10px; }
         
         .timer-box { font-size: 16px; color: #ff3333; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
         .progress-bar { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
         .progress { width: 0%; background: #00ff66; height: 100%; transition: width 0.3s ease; }
         
-        .question-box { text-align: left; margin-bottom: 20px; color: #ffffff; font-size: 15px; line-height: 1.5; min-height: 60px; }
+        .question-box { text-align: left; margin-bottom: 20px; color: #ffffff; font-size: 15px; line-height: 1.5; min-height: 75px; }
         .cursor { animation: blink 0.8s infinite; color: #00ff66; font-weight: bold; }
         
         .options-box { display: flex; flex-direction: column; gap: 12px; }
@@ -37,12 +38,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- Update this source value if your photo filename is different -->
+        <!-- Update this file name if your photo name changes -->
         <img src="Snapchat-1986047837.jpg" alt="System Terminal" class="profile-pic" onerror="this.style.display='none'">
         
-        <h2>CODE RUSH™</h2>
-        <div class="brand-sub">ᴮᴴᴬᴰᴮᴼᴵ_ᴳᴼᴼᴰᵞ✞</div>
-        <div class="system-status">Nodes: Encrypted // Timer: Armed</div>
+        <h2>CODERUSH™</h2>
+        <div class="brand-sub">Bhadboi_goody</div>
+        <div class="brand-title">C.E.O of Coderush™</div>
+        <div class="system-status">Nodes: Secure // Mainframe: Armed</div>
         
         <!-- Quiz Section -->
         <div id="quiz-section">
@@ -68,13 +70,13 @@
         <!-- Results Screen (Unlocked) -->
         <div id="result-box" class="hidden">
             <p style="color: #00ff66; font-weight: bold; font-size: 22px; margin-bottom: 5px;">👑 ACCESS GRANTED</p>
-            <p style="color: #ffff00; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="final-score-display">YOUR SCORE: 0 / 5</p>
+            <p style="color: #ffff00; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="final-score-display">YOUR SCORE: 0 / 10</p>
             <p style="color: #fff; font-size: 14px; margin-bottom: 15px; line-height: 1.5; text-align: left;" id="rank-critique"></p>
             <div style="background: #14141c; padding: 12px; border-radius: 6px; text-align: left; font-size: 13px; color: #8a8a98; border: 1px solid #333;">
                 <b style="color: #00ff66; display: block; margin-bottom: 5px;">🔥 TERMINAL PATCH CODES:</b>
-                • Avoid simple sequential passwords.<br>
-                • Check every email sender profile link completely.<br>
-                • Run persistent sandbox checks on strange APK downloads.
+                • Never reuse the exact same password on different apps.<br>
+                • Do not click links sent by random accounts.<br>
+                • Turn on Two-Factor Authentication (2FA) to protect accounts.
             </div>
         </div>
     </div>
@@ -83,11 +85,16 @@
         const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
         
         const quizData = [
-            { q: "1. What is a 'Brute Force' attack used for by hackers?", a: ["Cracking passwords by trying thousands of combinations", "Crashing a physical computer motherboard", "Stealing fiber optic internet cables directly"], c: 0 },
-            { q: "2. If a hacker installs software on your phone that secretly records everything you type (including passwords), what is it called?", a: ["Phishing wave", "Keylogger (Spyware)", "Ransomware bypass"], c: 1 },
-            { q: "3. What is the safest way to browse public Wi-Fi networks (like at a cafe or airport)?", a: ["Turn off your phone's Bluetooth", "Use a secure VPN (Virtual Private Network)", "Clear your browser cookies before connecting"], c: 1 },
-            { q: "4. A website link shows as 'http://secure-facebook.login-update.com'. Is it real?", a: ["Yes, it says secure right in the link text", "Yes, it goes to Facebook's server parameters", "No, it is a fake domain setup for phishing"], c: 2 },
-            { q: "5. What does an 'Ethical Hacker' (White Hat) do?", a: ["Steals bank data to give money to charity groups", "Finds system security weaknesses legally to fix them", "Breaks company servers to destroy private databases"], c: 1 }
+            { q: "1. Which password is the strongest and hardest to guess?", a: ["password123", "BhadBoi!99#Gdy", "12345678"], c: 1 },
+            { q: "2. Is it safe to share your account verification codes or OTPs with anyone?", a: ["Yes, if they say they are customer support", "No, never share verification codes with anyone", "Yes, if it's a close friend online"], c: 1 },
+            { q: "3. What should you do if an unknown number sends you a random link on WhatsApp?", a: ["Click it out of curiosity", "Forward it to your contacts", "Delete the message and block the number"], c: 2 },
+            { q: "4. What does '2FA' (Two-Factor Authentication) do for your accounts?", a: ["It adds an extra security lock to prevent hacking", "It makes your internet connection twice as fast", "It deletes old messages automatically"], c: 0 },
+            { q: "5. If a stranger messages you offering free game currency or cash if you give them your login details, what is it?", a: ["A real giveaway opportunity", "A phishing scam to steal your account", "A glitch in the social media app"], c: 1 },
+            { q: "6. Is public free Wi-Fi (like at hotels or parks) completely safe for checking bank accounts?", a: ["Yes, public Wi-Fi is always safe", "No, hackers can easily monitor public Wi-Fi data", "Yes, as long as your battery is full"], c: 1 },
+            { q: "7. What should you do if your phone app prompts you to update its software?", a: ["Ignore it forever", "Install the update to patch security holes", "Delete the app immediately"], c: 1 },
+            { q: "8. What is the main reason hackers lock up computers using 'Ransomware'?", a: ["To clean out junk files", "To demand money (ransom) to unlock them", "To make the screen background look cool"], c: 1 },
+            { q: "9. If a login page link says 'instagram-security-check.net' instead of 'instagram.com', is it real?", a: ["No, it's a fake phishing site trying to copy the real app", "Yes, it's a special emergency security backup link", "Yes, because it has the word security in it"], c: 0 },
+            { q: "10. What is an 'Ethical Hacker' (White Hat)?", a: ["A hacker who steals money from companies", "A security expert who protects systems and fixes bugs", "A person who builds viruses for fun"], c: 1 }
         ];
 
         let currentIdx = 0;
@@ -124,11 +131,12 @@
             element.innerText = "";
             document.getElementById("terminal-cursor").style.display = "inline";
             
+            // Slowed down slightly from 30ms to 45ms for a cleaner terminal effect
             function type() {
                 if (index < text.length) {
                     element.innerText += text.charAt(index);
                     index++;
-                    setTimeout(type, 30);
+                    setTimeout(type, 45);
                 } else {
                     isTyping = false;
                     document.getElementById("terminal-cursor").style.display = "none";
@@ -159,7 +167,7 @@
                     btn.onclick = () => { if (!isTyping) handleAnswer(idx); };
                     container.appendChild(btn);
                     
-                    setTimeout(() => { btn.classList.add("show"); }, idx * 150);
+                    setTimeout(() => { btn.classList.add("show"); }, idx * 120);
                 });
                 startTimer();
             });
@@ -194,12 +202,14 @@
             document.getElementById("final-score-display").innerText = `YOUR SCORE: ${score} / ${quizData.length}`;
             
             let critiqueText = "";
-            if (score === 5) {
-                critiqueText = "ELITE WHITE-HAT STATUS. Excellent. Your security matrices completely blocked all terminal vectors. You display complete operational clarity over hostile script signatures.";
-            } else if (score >= 3) {
-                critiqueText = "SECURE NETWORK DEFENDER. Decent parameters. You successfully dodged core phishing traps and spy assets, but advanced server exploits can still crack your parameters.";
+            if (score === 10) {
+                critiqueText = "MASTER TERMINAL OPERATOR. Flawless execution. Your defense profile perfectly detected every single exploit pattern. Your personal device ecosystem is safe.";
+            } else if (score >= 7) {
+                critiqueText = "ADVANCED NETWORK GUARD. Solid numbers. You know your way around common phishing traps and 2FA parameters, but stay sharp against complex domain spoofing.";
+            } else if (score >= 5) {
+                critiqueText = "BASIC USER PROTOCOL. Caution advised. You passed the bare minimum checks, but simple password exploits and malicious links could still threaten your data systems.";
             } else {
-                critiqueText = "CRITICAL VULNERABILITY FOUND. Danger level high. Your terminal interface is easily exposed to fundamental brute force scans and fake login frames. Secure your network vectors immediately.";
+                critiqueText = "CRITICAL DEFENSE FAILURE. High risk profile. Your setup easily slips into fundamental credential harvesting traps and engineering scams. Implement proper protection updates immediately.";
             }
             
             document.getElementById("rank-critique").innerText = critiqueText;
