@@ -19,6 +19,10 @@
         .brand-title { font-size: 11px; color: #00ff66; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
         .system-status { font-size: 10px; color: #666; margin-bottom: 15px; text-transform: uppercase; border-top: 1px dashed #333; padding-top: 10px; }
         
+        /* Input & Controls */
+        .terminal-input { background: #14141c; border: 1px solid #333; color: #00ff66; padding: 14px; font-family: 'Courier New', monospace; font-size: 16px; border-radius: 6px; width: 100%; outline: none; text-align: center; margin-bottom: 20px; -webkit-appearance: none; }
+        .terminal-input:focus { border-color: #00ff66; box-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
+        
         .timer-box { font-size: 16px; color: #ff3333; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
         .progress-bar { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
         .progress { width: 0%; background: #00ff66; height: 100%; transition: width 0.3s ease; }
@@ -30,6 +34,9 @@
         .option-btn { background: #14141c; color: #ffffff; border: 1px solid #333; padding: 14px; text-align: left; border-radius: 6px; cursor: pointer; font-size: 14px; font-family: 'Courier New', monospace; transition: all 0.2s ease; visibility: hidden; opacity: 0; -webkit-tap-highlight-color: transparent; }
         .option-btn.show { visibility: visible; opacity: 1; transition: opacity 0.3s ease; }
         .option-btn:hover { border-color: #00ff66; background: rgba(0, 255, 102, 0.08); padding-left: 18px; }
+        
+        .btn-next { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; -webkit-tap-highlight-color: transparent; }
+        .btn-next:hover { background: #00cc52; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
         
         .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; margin-top: 15px; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-align: center; -webkit-tap-highlight-color: transparent; }
         .btn-whatsapp:hover { background: #20ba59; }
@@ -53,9 +60,15 @@
         <h2>CODERUSH™</h2>
         <div class="brand-sub">Bhadboi_goody</div>
         <div class="brand-title">C.E.O of Coderush™</div>
-        <div class="system-status">Nodes: Secure // Mainframe: Armed</div>
+        <div class="system-status" id="status-line">Nodes: Secure // Mainframe: Ready</div>
         
-        <div id="quiz-section">
+        <div id="welcome-section">
+            <div class="question-box"><span id="welcome-text"></span><span class="cursor" id="welcome-cursor">█</span></div>
+            <input type="text" id="operator-name" class="terminal-input" placeholder="Enter Operator Alias..." autocomplete="off">
+            <button class="btn-next" id="btn-start">Next 🔐</button>
+        </div>
+
+        <div id="quiz-section" class="hidden">
             <div class="timer-box" id="timer-display">⏱️ SYSTEM TIME LEFT: 15s</div>
             <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
             <div class="question-box"><span id="question-text"></span><span class="cursor" id="terminal-cursor">█</span></div>
@@ -91,6 +104,7 @@
 
     <script>
         const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
+        let userName = "Operator";
         
         let audioCtx = null;
 
@@ -171,12 +185,12 @@
             }, 1000);
         }
 
-        function typeText(text, elementId, callback) {
+        function typeText(text, elementId, cursorId, callback) {
             let index = 0;
             isTyping = true;
             const element = document.getElementById(elementId);
             element.innerText = "";
-            document.getElementById("terminal-cursor").style.display = "inline";
+            document.getElementById(cursorId).style.display = "inline";
             
             function type() {
                 if (index < text.length) {
@@ -186,11 +200,22 @@
                     setTimeout(type, 35);
                 } else {
                     isTyping = false;
-                    document.getElementById("terminal-cursor").style.display = "none";
+                    document.getElementById(cursorId).style.display = "none";
                     if (callback) callback();
                 }
             }
             type();
+        }
+
+        function submitName() {
+            const inputVal = document.getElementById("operator-name").value.trim();
+            if (inputVal !== "") {
+                userName = inputVal;
+            }
+            document.getElementById("status-line").innerText = `Operator: ${userName} // Mainframe: Armed`;
+            document.getElementById("welcome-section").classList.add("hidden");
+            document.getElementById("quiz-section").classList.remove("hidden");
+            loadQuestion();
         }
 
         function loadQuestion() {
@@ -206,7 +231,7 @@
             const container = document.getElementById("options-container");
             container.innerHTML = "";
             
-            typeText(currentQ.q, "question-text", () => {
+            typeText(currentQ.q, "question-text", "terminal-cursor", () => {
                 currentQ.a.forEach((opt, idx) => {
                     const btn = document.createElement("button");
                     btn.className = "option-btn";
@@ -232,12 +257,24 @@
             loadQuestion();
         }
 
+        document.getElementById("btn-start").addEventListener("click", function() {
+            forceAudioInit();
+            submitName();
+        });
+
+        document.getElementById("operator-name").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                forceAudioInit();
+                submitName();
+            }
+        });
+
         function showLockScreen() {
             document.getElementById("quiz-section").classList.add("hidden");
             document.getElementById("loading-section").classList.remove("hidden");
             
             let loadMsg = "Isolating network packets... Check sum passed.";
-            typeText(loadMsg, "loading-text", () => {
+            typeText(loadMsg, "loading-text", "terminal-cursor", () => {
                 setTimeout(() => {
                     document.getElementById("loading-section").classList.add("hidden");
                     document.getElementById("lock-screen").classList.remove("hidden");
@@ -255,13 +292,13 @@
 
             let critiqueText = "";
             if (score === 10) {
-                critiqueText = "MASTER TERMINAL OPERATOR. Flawless execution. Your defense profile perfectly detected every single exploit pattern. Your personal device ecosystem is safe.";
+                critiqueText = `MASTER TERMINAL OPERATOR ${userName.toUpperCase()}. Flawless execution. Your defense profile perfectly detected every single exploit pattern. Your personal device ecosystem is safe.`;
             } else if (score >= 7) {
-                critiqueText = "ADVANCED NETWORK GUARD. Solid numbers. You know your way around common phishing traps and 2FA parameters, but stay sharp against complex domain spoofing.";
+                critiqueText = `ADVANCED NETWORK GUARD ${userName.toUpperCase()}. Solid numbers. You know your way around common phishing traps and 2FA parameters, but stay sharp against complex domain spoofing.`;
             } else if (score >= 5) {
-                critiqueText = "BASIC USER PROTOCOL. Caution advised. You passed the bare minimum checks, but simple password exploits and malicious links could still threaten your data systems.";
+                critiqueText = `BASIC USER PROTOCOL. Caution advised, ${userName}. You passed the bare minimum checks, but simple password exploits and malicious links could still threaten your data systems.`;
             } else {
-                critiqueText = "CRITICAL DEFENSE FAILURE. High risk profile. Your setup easily slips into fundamental credential harvesting traps and engineering scams. Implement proper protection updates immediately.";
+                critiqueText = `CRITICAL DEFENSE FAILURE. High risk profile, ${userName}. Your setup easily slips into fundamental credential harvesting traps and engineering scams. Implement proper protection updates immediately.`;
             }
             
             document.getElementById("rank-critique").innerText = critiqueText;
@@ -295,17 +332,4 @@
                 if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     rainDrops[i] = 0;
                 }
-                rainDrops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 33);
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        loadQuestion();
-    </script>
-</body>
-    </html>
-    
+  
