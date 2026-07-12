@@ -11,44 +11,18 @@
         /* Matrix Background Canvas */
         #matrix-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; opacity: 0.15; pointer-events: none; }
         
-        .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 30px rgba(0, 255, 102, 0.2); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; z-index: 2; transition: transform 0.1s ease; }
+        .container { background: #101014; padding: 30px 25px; border-radius: 12px; box-shadow: 0 0 30px rgba(0, 255, 102, 0.2); max-width: 500px; width: 100%; text-align: center; border: 1px solid #00ff66; position: relative; z-index: 2; }
         
-        /* Hacked Screen Shake Effect */
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); border-color: #ff3333; box-shadow: 0 0 30px rgba(255, 51, 51, 0.6); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(0px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(2px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(2px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(0deg); border-color: #00ff66; }
-        }
-        .shaking { animation: shake 0.4s ease-in-out; }
-
         .profile-pic { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid #00ff66; }
         h2 { font-size: 26px; margin-bottom: 2px; color: #00ff66; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
         .brand-sub { font-size: 14px; color: #ffffff; margin-bottom: 2px; letter-spacing: 1px; }
         .brand-title { font-size: 11px; color: #00ff66; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
         .system-status { font-size: 10px; color: #666; margin-bottom: 15px; text-transform: uppercase; border-top: 1px dashed #333; padding-top: 10px; }
         
-        /* Input & Controls */
-        .terminal-input { background: #14141c; border: 1px solid #333; color: #00ff66; padding: 14px; font-family: 'Courier New', monospace; font-size: 16px; border-radius: 6px; width: 100%; outline: none; text-align: center; margin-bottom: 20px; -webkit-appearance: none; }
-        .terminal-input:focus { border-color: #00ff66; box-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
-        
         .timer-box { font-size: 16px; color: #ff3333; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
         .progress-bar { width: 100%; background: #222; height: 6px; border-radius: 3px; margin-bottom: 25px; overflow: hidden; }
         .progress { width: 0%; background: #00ff66; height: 100%; transition: width 0.3s ease; }
         
-        /* Power Ups */
-        .powerup-box { display: flex; justify-content: center; margin-bottom: 20px; }
-        .btn-powerup { background: #14141c; color: #ffff00; border: 1px solid #ffff00; padding: 8px 16px; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
-        .btn-powerup:hover:not(:disabled) { background: rgba(255, 255, 0, 0.1); box-shadow: 0 0 8px rgba(255, 255, 0, 0.3); }
-        .btn-powerup:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #444; }
-
         .question-box { text-align: left; margin-bottom: 20px; color: #ffffff; font-size: 15px; line-height: 1.5; min-height: 75px; }
         .cursor { animation: blink 0.8s infinite; color: #00ff66; font-weight: bold; }
         
@@ -57,21 +31,12 @@
         .option-btn.show { visibility: visible; opacity: 1; transition: opacity 0.3s ease; }
         .option-btn:hover { border-color: #00ff66; background: rgba(0, 255, 102, 0.08); padding-left: 18px; }
         
-        .btn-next { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; -webkit-tap-highlight-color: transparent; }
-        .btn-next:hover { background: #00cc52; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
-        
-        .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; margin-top: 15px; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-align: center; }
+        .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; margin-top: 15px; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-align: center; -webkit-tap-highlight-color: transparent; }
         .btn-whatsapp:hover { background: #20ba59; }
-        .btn-share { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: all 0.3s ease; display: inline-block; text-decoration: none; margin-top: 12px; font-family: 'Courier New', monospace; text-align: center; }
+        
+        .btn-share { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: all 0.3s ease; display: inline-block; text-decoration: none; margin-top: 12px; font-family: 'Courier New', monospace; text-align: center; -webkit-tap-highlight-color: transparent; }
         .btn-share:hover { background: #00cc52; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
         
-        /* Custom Digital Certificate Layout */
-        .certificate-box { background: #0a0a0d; border: 2px dashed #00ff66; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; position: relative; box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.1); }
-        .cert-title { font-size: 14px; font-weight: bold; color: #00ff66; letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase; }
-        .cert-name { font-size: 20px; color: #ffffff; font-weight: bold; margin: 8px 0; border-bottom: 1px solid #222; display: inline-block; padding-bottom: 5px; min-width: 60%; }
-        .cert-clearance { font-size: 11px; color: #ffff00; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
-        .cert-stamp { font-size: 9px; color: #666; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
-
         .hidden { display: none !important; }
         .loading { color: #ff3333; font-weight: bold; animation: textBlink 1s infinite; margin: 20px 0; letter-spacing: 1px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -82,28 +47,17 @@
 
     <canvas id="matrix-bg"></canvas>
 
-    <div class="container" id="terminal-container">
+    <div class="container">
         <img src="Snapchat-1986047837.jpg" alt="System Terminal" class="profile-pic" onerror="this.style.display='none'">
         
         <h2>CODERUSH™</h2>
         <div class="brand-sub">Bhadboi_goody</div>
         <div class="brand-title">C.E.O of Coderush™</div>
-        <div class="system-status" id="status-line">Nodes: Secure // Mainframe: Ready</div>
+        <div class="system-status">Nodes: Secure // Mainframe: Armed</div>
         
-        <div id="welcome-section">
-            <div class="question-box"><span id="welcome-text"></span><span class="cursor" id="welcome-cursor">█</span></div>
-            <input type="text" id="operator-name" class="terminal-input" placeholder="Enter Operator Alias..." autocomplete="off">
-            <button class="btn-next" id="btn-start">Next [Enter] 🔐</button>
-        </div>
-
-        <div id="quiz-section" class="hidden">
+        <div id="quiz-section">
             <div class="timer-box" id="timer-display">⏱️ SYSTEM TIME LEFT: 15s</div>
             <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
-            
-            <div class="powerup-box">
-                <button id="powerup-btn" class="btn-powerup">⚡ USE 50/50 EXPLOIT (1 LEFT)</button>
-            </div>
-
             <div class="question-box"><span id="question-text"></span><span class="cursor" id="terminal-cursor">█</span></div>
             <div class="options-box" id="options-container"></div>
         </div>
@@ -116,7 +70,7 @@
         <div id="lock-screen" class="hidden">
             <p style="color: #ff3333; font-weight: bold; font-size: 18px; margin-bottom: 12px;">🔒 MATRIX DATA LOCKED</p>
             <p style="margin-bottom: 20px; color: #b3b3c2; line-height: 1.6; font-size: 14px;">Your vulnerability profile evaluation is complete. Your official defensive certificate score code is ready. Join our official WhatsApp channel below to bypass encryption and instantly display your results!</p>
-            <button class="btn-whatsapp" id="btn-unlock">Unlock My Matrix Score 🔓</button>
+            <button class="btn-whatsapp" onclick="verifyAndUnlock()">Unlock My Matrix Score 🔓</button>
         </div>
         
         <div id="result-box" class="hidden">
@@ -124,15 +78,7 @@
             <p style="color: #ffff00; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="final-score-display">YOUR SCORE: 0 / 10</p>
             <p style="color: #fff; font-size: 14px; margin-bottom: 15px; line-height: 1.5; text-align: left;" id="rank-critique"></p>
             
-            <div class="certificate-box">
-                <div class="cert-title">🛡️ SECURITY PASSPORT CERTIFICATE</div>
-                <div style="font-size: 11px; color: #888;">THIS OFFICIAL TERMINAL DOCUMENT ASSIGNS ADVANCED MONITORING TO:</div>
-                <div class="cert-name" id="cert-user-name">OPERATOR NAME</div>
-                <div class="cert-clearance" id="cert-rank-clearance">CLEARANCE: PROTOCOL EVALUATION</div>
-                <div class="cert-stamp">VERIFIED BY: CODERUSH MAINFRAME // ROOT AUDIT PASSED</div>
-            </div>
-
-            <button class="btn-share" id="btn-share-wa">Challenge a Friend on WhatsApp ⚔️</button>
+            <button class="btn-share" onclick="shareOnWhatsApp()">Challenge a Friend on WhatsApp ⚔️</button>
             
             <div style="background: #14141c; padding: 12px; border-radius: 6px; text-align: left; font-size: 13px; color: #8a8a98; border: 1px solid #333; margin-top: 15px;">
                 <b style="color: #00ff66; display: block; margin-bottom: 5px;">🔥 TERMINAL PATCH CODES:</b>
@@ -145,7 +91,6 @@
 
     <script>
         const WHATSAPP_LINK = "https://whatsapp.com/channel/0029Vb7hRMXISTkFZJkgWG1J";
-        let userName = "Operator";
         
         let audioCtx = null;
 
@@ -158,7 +103,7 @@
                     audioCtx.resume();
                 }
             } catch (e) {
-                console.log("Audio parameters skipped or unsupported.");
+                console.log("Audio skipped or unsupported context parameters.");
             }
         }
 
@@ -177,26 +122,12 @@
                 osc.stop(audioCtx.currentTime + duration);
             } catch(e) {}
         }
-        
-        // Mechanical typing tone restored, tuned perfectly for rapid character streams
-        function playTypeSound() { playTone(120, 'triangle', 0.03, 0.15); } 
+        function playTypeSound() { playTone(120, 'triangle', 0.03, 0.15); }
         function playTickSound() { playTone(800, 'sine', 0.04, 0.2); }
-        function playExploitSound() { playTone(350, 'sawtooth', 0.15, 0.2); }
         function playSuccessSound() { 
             playTone(523.25, 'sine', 0.1, 0.2); 
             setTimeout(() => playTone(659.25, 'sine', 0.1, 0.2), 100);
             setTimeout(() => playTone(783.99, 'sine', 0.2, 0.3), 200);
-        }
-
-        // Background music loop completely removed for optimal execution performance.
-
-        function triggerScreenShake() {
-            const container = document.getElementById("terminal-container");
-            container.classList.remove("shaking");
-            void container.offsetWidth; 
-            container.classList.add("shaking");
-            playTone(90, 'sawtooth', 0.3, 0.3); 
-            setTimeout(() => container.classList.remove("shaking"), 400);
         }
 
         const quizData = [
@@ -217,7 +148,6 @@
         let timeLeft = 15;
         let timerInterval = null;
         let isTyping = false;
-        let powerUpAvailable = true;
 
         function startTimer() {
             clearInterval(timerInterval);
@@ -236,18 +166,17 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    triggerScreenShake(); 
                     handleAnswer(-1);
                 }
             }, 1000);
         }
 
-        function typeText(text, elementId, cursorId, callback) {
+        function typeText(text, elementId, callback) {
             let index = 0;
             isTyping = true;
             const element = document.getElementById(elementId);
             element.innerText = "";
-            document.getElementById(cursorId).style.display = "inline";
+            document.getElementById("terminal-cursor").style.display = "inline";
             
             function type() {
                 if (index < text.length) {
@@ -257,44 +186,11 @@
                     setTimeout(type, 35);
                 } else {
                     isTyping = false;
-                    document.getElementById(cursorId).style.display = "none";
+                    document.getElementById("terminal-cursor").style.display = "none";
                     if (callback) callback();
                 }
             }
             type();
-        }
-
-        function submitName() {
-            const inputVal = document.getElementById("operator-name").value.trim();
-            if (inputVal !== "") {
-                userName = inputVal;
-            }
-            document.getElementById("status-line").innerText = `Operator: ${userName} // Mainframe: Armed`;
-            document.getElementById("welcome-section").classList.add("hidden");
-            document.getElementById("quiz-section").classList.remove("hidden");
-            loadQuestion();
-        }
-
-        function usePowerUp() {
-            if (!powerUpAvailable || isTyping) return;
-            powerUpAvailable = false;
-            document.getElementById("powerup-btn").disabled = true;
-            document.getElementById("powerup-btn").innerText = "⚡ EXPLOIT DEPLOYED (0 LEFT)";
-            playExploitSound();
-
-            const currentQ = quizData[currentIdx];
-            const correctIdx = currentQ.c;
-            const buttons = document.getElementsByClassName("option-btn");
-            
-            let removedCount = 0;
-            for (let i = 0; i < buttons.length; i++) {
-                if (i !== correctIdx && removedCount < 1) {
-                    buttons[i].style.opacity = "0.1";
-                    buttons[i].style.pointerEvents = "none";
-                    buttons[i].innerText = "[MALFORMED PACKET DETECTED]";
-                    removedCount++;
-                }
-            }
         }
 
         function loadQuestion() {
@@ -310,6 +206,106 @@
             const container = document.getElementById("options-container");
             container.innerHTML = "";
             
-            typeText(currentQ.q, "question-text", "terminal-cursor", () => {
+            typeText(currentQ.q, "question-text", () => {
                 currentQ.a.forEach((opt, idx) => {
-                    const btn = document.createElement("bu
+                    const btn = document.createElement("button");
+                    btn.className = "option-btn";
+                    btn.innerText = opt;
+                    btn.onclick = () => { 
+                        forceAudioInit();
+                        if (!isTyping) handleAnswer(idx); 
+                    };
+                    container.appendChild(btn);
+                    
+                    setTimeout(() => { btn.classList.add("show"); }, idx * 100);
+                });
+                startTimer();
+            });
+        }
+
+        function handleAnswer(selectedIdx) {
+            clearInterval(timerInterval);
+            if (selectedIdx === quizData[currentIdx].c) {
+                score++;
+            }
+            currentIdx++;
+            loadQuestion();
+        }
+
+        function showLockScreen() {
+            document.getElementById("quiz-section").classList.add("hidden");
+            document.getElementById("loading-section").classList.remove("hidden");
+            
+            let loadMsg = "Isolating network packets... Check sum passed.";
+            typeText(loadMsg, "loading-text", () => {
+                setTimeout(() => {
+                    document.getElementById("loading-section").classList.add("hidden");
+                    document.getElementById("lock-screen").classList.remove("hidden");
+                }, 1500);
+            });
+        }
+
+        function verifyAndUnlock() {
+            forceAudioInit();
+            window.open(WHATSAPP_LINK, '_blank');
+            document.getElementById('lock-screen').classList.add('hidden');
+            
+            document.getElementById("final-score-display").innerText = `YOUR SCORE: ${score} / ${quizData.length}`;
+            playSuccessSound();
+
+            let critiqueText = "";
+            if (score === 10) {
+                critiqueText = "MASTER TERMINAL OPERATOR. Flawless execution. Your defense profile perfectly detected every single exploit pattern. Your personal device ecosystem is safe.";
+            } else if (score >= 7) {
+                critiqueText = "ADVANCED NETWORK GUARD. Solid numbers. You know your way around common phishing traps and 2FA parameters, but stay sharp against complex domain spoofing.";
+            } else if (score >= 5) {
+                critiqueText = "BASIC USER PROTOCOL. Caution advised. You passed the bare minimum checks, but simple password exploits and malicious links could still threaten your data systems.";
+            } else {
+                critiqueText = "CRITICAL DEFENSE FAILURE. High risk profile. Your setup easily slips into fundamental credential harvesting traps and engineering scams. Implement proper protection updates immediately.";
+            }
+            
+            document.getElementById("rank-critique").innerText = critiqueText;
+            document.getElementById('result-box').classList.remove('hidden');
+        }
+
+        function shareOnWhatsApp() {
+            const currentUrl = window.location.href;
+            const message = `⚡ I just scored ${score}/10 on the CODERUSH™ Terminal Challenge! Can you beat my score? Break the encryption here ⚔️: ${currentUrl}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Matrix Rain Background Effect Logic
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const alphabet = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 5, 8, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff66';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        loadQuestion();
+    </script>
+</body>
+    </html>
+    
