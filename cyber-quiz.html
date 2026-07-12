@@ -148,7 +148,6 @@
         let userName = "Operator";
         
         let audioCtx = null;
-        let bgmNode = null;
 
         function forceAudioInit() {
             try {
@@ -179,8 +178,8 @@
             } catch(e) {}
         }
         
-        // Typing sound removed completely to eliminate text loop crashes on mobile webviews.
-        function playTypeSound() { return; } 
+        // Mechanical typing tone restored, tuned perfectly for rapid character streams
+        function playTypeSound() { playTone(120, 'triangle', 0.03, 0.15); } 
         function playTickSound() { playTone(800, 'sine', 0.04, 0.2); }
         function playExploitSound() { playTone(350, 'sawtooth', 0.15, 0.2); }
         function playSuccessSound() { 
@@ -189,33 +188,7 @@
             setTimeout(() => playTone(783.99, 'sine', 0.2, 0.3), 200);
         }
 
-        function startBackgroundMusic() {
-            try {
-                if (!audioCtx || bgmNode) return;
-                const bufferSize = audioCtx.sampleRate * 4;
-                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const data = buffer.getChannelData(0);
-                
-                for (let i = 0; i < bufferSize; i++) {
-                    let t = i / audioCtx.sampleRate;
-                    let rhythmicBeat = Math.sin(2 * Math.PI * 55 * t) * (Math.sin(2 * Math.PI * 4 * t) > 0 ? 0.05 : 0.01);
-                    let lowDrone = Math.sin(2 * Math.PI * 110 * t) * 0.02;
-                    data[i] = rhythmicBeat + lowDrone;
-                }
-                
-                bgmNode = audioCtx.createBufferSource();
-                bgmNode.buffer = buffer;
-                bgmNode.loop = true;
-                
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(400, audioCtx.currentTime);
-                
-                bgmNode.connect(filter);
-                filter.connect(audioCtx.destination);
-                bgmNode.start();
-            } catch(e) {}
-        }
+        // Background music loop completely removed for optimal execution performance.
 
         function triggerScreenShake() {
             const container = document.getElementById("terminal-container");
@@ -279,8 +252,9 @@
             function type() {
                 if (index < text.length) {
                     element.innerText += text.charAt(index);
+                    if(text.charAt(index) !== " ") { playTypeSound(); }
                     index++;
-                    setTimeout(type, 35); // Sleek typing transition rate
+                    setTimeout(type, 35);
                 } else {
                     isTyping = false;
                     document.getElementById(cursorId).style.display = "none";
@@ -312,4 +286,30 @@
             const correctIdx = currentQ.c;
             const buttons = document.getElementsByClassName("option-btn");
             
-         
+            let removedCount = 0;
+            for (let i = 0; i < buttons.length; i++) {
+                if (i !== correctIdx && removedCount < 1) {
+                    buttons[i].style.opacity = "0.1";
+                    buttons[i].style.pointerEvents = "none";
+                    buttons[i].innerText = "[MALFORMED PACKET DETECTED]";
+                    removedCount++;
+                }
+            }
+        }
+
+        function loadQuestion() {
+            if (currentIdx >= quizData.length) {
+                clearInterval(timerInterval);
+                showLockScreen();
+                return;
+            }
+            
+            document.getElementById("quiz-progress").style.width = ((currentIdx + 1) / quizData.length * 100) + "%";
+            const currentQ = quizData[currentIdx];
+            
+            const container = document.getElementById("options-container");
+            container.innerHTML = "";
+            
+            typeText(currentQ.q, "question-text", "terminal-cursor", () => {
+                currentQ.a.forEach((opt, idx) => {
+                    const btn = document.createElement("bu
