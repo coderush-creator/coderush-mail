@@ -36,7 +36,7 @@
         .system-status { font-size: 10px; color: #666; margin-bottom: 15px; text-transform: uppercase; border-top: 1px dashed #333; padding-top: 10px; }
         
         /* Input & Controls */
-        .terminal-input { background: #14141c; border: 1px solid #333; color: #00ff66; padding: 14px; font-family: 'Courier New', monospace; font-size: 16px; border-radius: 6px; width: 100%; outline: none; text-align: center; margin-bottom: 20px; }
+        .terminal-input { background: #14141c; border: 1px solid #333; color: #00ff66; padding: 14px; font-family: 'Courier New', monospace; font-size: 16px; border-radius: 6px; width: 100%; outline: none; text-align: center; margin-bottom: 20px; -webkit-appearance: none; }
         .terminal-input:focus { border-color: #00ff66; box-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
         
         .timer-box { font-size: 16px; color: #ff3333; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
@@ -45,7 +45,7 @@
         
         /* Power Ups */
         .powerup-box { display: flex; justify-content: center; margin-bottom: 20px; }
-        .btn-powerup { background: #14141c; color: #ffff00; border: 1px solid #ffff00; padding: 8px 16px; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+        .btn-powerup { background: #14141c; color: #ffff00; border: 1px solid #ffff00; padding: 8px 16px; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
         .btn-powerup:hover:not(:disabled) { background: rgba(255, 255, 0, 0.1); box-shadow: 0 0 8px rgba(255, 255, 0, 0.3); }
         .btn-powerup:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #444; }
 
@@ -53,11 +53,11 @@
         .cursor { animation: blink 0.8s infinite; color: #00ff66; font-weight: bold; }
         
         .options-box { display: flex; flex-direction: column; gap: 12px; }
-        .option-btn { background: #14141c; color: #ffffff; border: 1px solid #333; padding: 14px; text-align: left; border-radius: 6px; cursor: pointer; font-size: 14px; font-family: 'Courier New', monospace; transition: all 0.2s ease; visibility: hidden; opacity: 0; }
+        .option-btn { background: #14141c; color: #ffffff; border: 1px solid #333; padding: 14px; text-align: left; border-radius: 6px; cursor: pointer; font-size: 14px; font-family: 'Courier New', monospace; transition: all 0.2s ease; visibility: hidden; opacity: 0; -webkit-tap-highlight-color: transparent; }
         .option-btn.show { visibility: visible; opacity: 1; transition: opacity 0.3s ease; }
         .option-btn:hover { border-color: #00ff66; background: rgba(0, 255, 102, 0.08); padding-left: 18px; }
         
-        .btn-next { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-next { background: #00ff66; color: #101014; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; -webkit-tap-highlight-color: transparent; }
         .btn-next:hover { background: #00cc52; box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
         
         .btn-whatsapp { background: #25D366; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.3s ease; display: inline-block; text-decoration: none; margin-top: 15px; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-align: center; }
@@ -93,7 +93,7 @@
         <div id="welcome-section">
             <div class="question-box"><span id="welcome-text"></span><span class="cursor" id="welcome-cursor">█</span></div>
             <input type="text" id="operator-name" class="terminal-input" placeholder="Enter Operator Alias..." autocomplete="off">
-            <button class="btn-next" onclick="submitName()">Next [Enter] 🔐</button>
+            <button class="btn-next" id="btn-start">Next [Enter] 🔐</button>
         </div>
 
         <div id="quiz-section" class="hidden">
@@ -101,7 +101,7 @@
             <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
             
             <div class="powerup-box">
-                <button id="powerup-btn" class="btn-powerup" onclick="usePowerUp()">⚡ USE 50/50 EXPLOIT (1 LEFT)</button>
+                <button id="powerup-btn" class="btn-powerup">⚡ USE 50/50 EXPLOIT (1 LEFT)</button>
             </div>
 
             <div class="question-box"><span id="question-text"></span><span class="cursor" id="terminal-cursor">█</span></div>
@@ -116,7 +116,7 @@
         <div id="lock-screen" class="hidden">
             <p style="color: #ff3333; font-weight: bold; font-size: 18px; margin-bottom: 12px;">🔒 MATRIX DATA LOCKED</p>
             <p style="margin-bottom: 20px; color: #b3b3c2; line-height: 1.6; font-size: 14px;">Your vulnerability profile evaluation is complete. Your official defensive certificate score code is ready. Join our official WhatsApp channel below to bypass encryption and instantly display your results!</p>
-            <button class="btn-whatsapp" onclick="verifyAndUnlock()">Unlock My Matrix Score 🔓</button>
+            <button class="btn-whatsapp" id="btn-unlock">Unlock My Matrix Score 🔓</button>
         </div>
         
         <div id="result-box" class="hidden">
@@ -132,7 +132,7 @@
                 <div class="cert-stamp">VERIFIED BY: CODERUSH MAINFRAME // ROOT AUDIT PASSED</div>
             </div>
 
-            <button class="btn-share" onclick="shareOnWhatsApp()">Challenge a Friend on WhatsApp ⚔️</button>
+            <button class="btn-share" id="btn-share-wa">Challenge a Friend on WhatsApp ⚔️</button>
             
             <div style="background: #14141c; padding: 12px; border-radius: 6px; text-align: left; font-size: 13px; color: #8a8a98; border: 1px solid #333; margin-top: 15px;">
                 <b style="color: #00ff66; display: block; margin-bottom: 5px;">🔥 TERMINAL PATCH CODES:</b>
@@ -150,8 +150,7 @@
         let audioCtx = null;
         let bgmNode = null;
 
-        // Safely sets up AudioContext inside try/catch to protect mobile transitions
-        function initAudio() {
+        function forceAudioInit() {
             try {
                 if (!audioCtx) {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -160,13 +159,12 @@
                     audioCtx.resume();
                 }
             } catch (e) {
-                console.log("Audio configuration blocked by browser safety protocols.");
+                console.log("Audio parameters skipped or unsupported.");
             }
         }
 
         function playTone(freq, type, duration, vol) {
             try {
-                initAudio();
                 if (!audioCtx) return;
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
@@ -181,7 +179,8 @@
             } catch(e) {}
         }
         
-        function playTypeSound() { playTone(120, 'triangle', 0.03, 0.15); }
+        // Typing sound removed completely to eliminate text loop crashes on mobile webviews.
+        function playTypeSound() { return; } 
         function playTickSound() { playTone(800, 'sine', 0.04, 0.2); }
         function playExploitSound() { playTone(350, 'sawtooth', 0.15, 0.2); }
         function playSuccessSound() { 
@@ -192,7 +191,6 @@
 
         function startBackgroundMusic() {
             try {
-                initAudio();
                 if (!audioCtx || bgmNode) return;
                 const bufferSize = audioCtx.sampleRate * 4;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -281,9 +279,8 @@
             function type() {
                 if (index < text.length) {
                     element.innerText += text.charAt(index);
-                    if(text.charAt(index) !== " ") { playTypeSound(); }
                     index++;
-                    setTimeout(type, 45);
+                    setTimeout(type, 35); // Sleek typing transition rate
                 } else {
                     isTyping = false;
                     document.getElementById(cursorId).style.display = "none";
@@ -294,10 +291,6 @@
         }
 
         function submitName() {
-            // Audio elements enclosed fully so execution can never be blocked
-            try { initAudio(); } catch(e){}
-            try { startBackgroundMusic(); } catch(e){}
-            
             const inputVal = document.getElementById("operator-name").value.trim();
             if (inputVal !== "") {
                 userName = inputVal;
@@ -313,4 +306,10 @@
             powerUpAvailable = false;
             document.getElementById("powerup-btn").disabled = true;
             document.getElementById("powerup-btn").innerText = "⚡ EXPLOIT DEPLOYED (0 LEFT)";
- 
+            playExploitSound();
+
+            const currentQ = quizData[currentIdx];
+            const correctIdx = currentQ.c;
+            const buttons = document.getElementsByClassName("option-btn");
+            
+         
